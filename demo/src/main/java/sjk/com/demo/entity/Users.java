@@ -1,38 +1,27 @@
 package sjk.com.demo.entity;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 
 @Entity
 public class Users {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
+
     private String username;
     private String password;
-    private String userType;
-    private String name;
-    private String documentType;
-    private String documentNumber;
-    private String phoneNumber;
-    private String email;
-    private String userIntro;
-    private String city;
-    private String inviteCode;
+    private String number;
+    private String date;
+    private int type;
 
-    // 构造函数
-    public Users() {
+    // Getters and Setters
+
+    public Long getId() {
+        return id;
     }
 
-    // Getter and Setter methods
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -51,76 +40,27 @@ public class Users {
         this.password = password;
     }
 
-    public String getUserType() {
-        return userType;
+    public String getNumber() {
+        return number;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public String getName() {
-        return name;
+    public String getDate() {
+        return date;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public String getDocumentType() {
-        return documentType;
+    public int getType() {
+        return type;
     }
 
-    public void setDocumentType(String documentType) {
-        this.documentType = documentType;
-    }
-
-    public String getDocumentNumber() {
-        return documentNumber;
-    }
-
-    public void setDocumentNumber(String documentNumber) {
-        this.documentNumber = documentNumber;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUserIntro() {
-        return userIntro;
-    }
-
-    public void setUserIntro(String userIntro) {
-        this.userIntro = userIntro;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getInviteCode() {
-        return inviteCode;
-    }
-
-    public void setInviteCode(String inviteCode) {
-        this.inviteCode = inviteCode;
+    public void setType(int type) {
+        this.type = type;
     }
 }
-

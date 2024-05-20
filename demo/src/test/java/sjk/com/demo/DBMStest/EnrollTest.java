@@ -1,24 +1,22 @@
 package sjk.com.demo.DBMStest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import sjk.com.demo.entity.Users;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import sjk.com.demo.service.Enrollmentusers;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ExtendWith(SpringExtension.class)
 public class EnrollTest {
 
     @Autowired
@@ -28,31 +26,39 @@ public class EnrollTest {
     private ObjectMapper objectMapper;
 
     @Test
-    public void testUserRegistration() throws Exception {
-        // Create a sample user object for registration
+    public void testRegisterUser() throws Exception {
+        // 创建一个用户对象
         Users user = new Users();
-        user.setUsername("sample_username");
-        user.setPassword("sample_password");
-        user.setUserType("普通⽤户");
-        user.setName("Sample User");
-        user.setDocumentType("ID");
-        user.setDocumentNumber("123456789");
-        user.setPhoneNumber("1234567890");
-        user.setEmail("sample@example.com");
-        user.setUserIntro("Sample introduction");
-        user.setCity("Sample City");
+        user.setUsername("testuser1");
+        user.setPassword("password");
+        user.setNumber("1234567890");
+        user.setDate("2024-05-20");
+        user.setType(1);
 
-        // Convert the user object to JSON
+        // 将用户对象转换为JSON
         String userJson = objectMapper.writeValueAsString(user);
 
-        // Perform the POST request to register the user
-        ResultActions result = mockMvc.perform(post("/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(userJson));
+        // 发送POST请求
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/user/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(userJson))
+                .andExpect(status().isOk())
+                .andReturn();
 
-        // Verify the response status and content
-        result.andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("User registered successfully"))
-                .andExpect(jsonPath("$.userId").isString());
+        // 获取响应内容
+        String responseJson = result.getResponse().getContentAsString();
+
+        // 将响应内容转换为 RegistrationResponse 对象
+        Enrollmentusers.RegistrationResponse response = objectMapper.readValue(responseJson, Enrollmentusers.RegistrationResponse.class);
+
+        // 输出响应信息
+        System.out.println("Response isOK: " + response.isOK());
+        System.out.println("Response Code: " + response.getCode());
+        System.out.println("Response Message: " + response.getMessage());
+
+        // 断言检查
+        assertThat(response.isOK()).isTrue();
+        assertThat(response.getCode()).isEqualTo("200");
+        assertThat(response.getMessage()).isEqualTo("User registered successfully");
     }
 }
