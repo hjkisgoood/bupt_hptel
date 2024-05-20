@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import sjk.com.demo.entity.Users;
 import sjk.com.demo.service.Enrollmentusers;
+import sjk.com.demo.service.Enrollmentusers.RegistrationResponse;
 
 @RestController
 public class Enroll {
@@ -16,31 +17,8 @@ public class Enroll {
         this.enrollmentusers = enrollmentusers;
     }
 
-    @PostMapping("/register")
+    @PostMapping("/api/user/register")
     public RegistrationResponse registerUser(@RequestBody Users user) {
-        String userId = enrollmentusers.registerUser(user);
-        return new RegistrationResponse("User registered successfully", userId);
-    }
-
-    // 内部类用于响应体
-    static class RegistrationResponse {
-        private final String message;
-        private final String userId;
-
-        public RegistrationResponse(String message, String userId) {
-            this.message = message;
-            this.userId = userId;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public String getUserId() {
-            return userId;
-        }
+        return enrollmentusers.registerUser(user);
     }
 }
-
-
-
