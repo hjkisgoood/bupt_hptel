@@ -1,5 +1,6 @@
 package sjk.com.demo.DBMStest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -9,11 +10,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import sjk.com.demo.entity.Users;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import sjk.com.demo.service.Enrollmentusers;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -29,7 +29,7 @@ public class EnrollTest {
     public void testRegisterUser() throws Exception {
         // 创建一个用户对象
         Users user = new Users();
-        user.setUsername("testuser1");
+        user.setUsername("testuser6");
         user.setPassword("password");
         user.setNumber("1234567890");
         user.setDate("2024-05-20");
@@ -52,12 +52,10 @@ public class EnrollTest {
         Enrollmentusers.RegistrationResponse response = objectMapper.readValue(responseJson, Enrollmentusers.RegistrationResponse.class);
 
         // 输出响应信息
-        System.out.println("Response isOK: " + response.isOK());
         System.out.println("Response Code: " + response.getCode());
         System.out.println("Response Message: " + response.getMessage());
 
         // 断言检查
-        assertThat(response.isOK()).isTrue();
         assertThat(response.getCode()).isEqualTo("200");
         assertThat(response.getMessage()).isEqualTo("User registered successfully");
     }

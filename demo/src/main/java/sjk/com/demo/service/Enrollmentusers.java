@@ -18,31 +18,28 @@ public class Enrollmentusers {
         // 在这里添加将用户数据保存到数据库的逻辑
         // 检查用户名是否已存在
         if (usersRepository.findByUsername(user.getUsername()) != null) {
-            return new RegistrationResponse(false, "409", "Username already exists");
+            return new RegistrationResponse( "409", "Username already exists");
         }
 
         // 保存用户数据到数据库
         usersRepository.save(user);
 
         // 模拟用户注册成功，返回一个 RegistrationResponse 对象
-        return new RegistrationResponse(true, "200", "User registered successfully");
+        return new RegistrationResponse( "200", "User registered successfully");
     }
 
     // 内部类用于响应体
     public static class RegistrationResponse {
-        private final boolean isOK;
+
         private final String code;
         private final String message;
 
-        public RegistrationResponse(boolean isOK, String code, String message) {
-            this.isOK = isOK;
+        public RegistrationResponse( String code, String message) {
+
             this.code = code;
             this.message = message;
         }
 
-        public boolean isOK() {
-            return isOK;
-        }
 
         public String getCode() {
             return code;
