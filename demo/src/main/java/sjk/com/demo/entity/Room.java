@@ -1,52 +1,26 @@
 package sjk.com.demo.entity;
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-
+import java.util.List;
 
 @Entity
+@Data
+@NoArgsConstructor
 public class Room {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String roomNumber;
-    private String roomType;
-    private boolean occupied;  // 修改属性名为 occupied
+    private int currentTemperature;
+    private boolean isAirConditionOn;
+    private int fanSpeed;
+    private int mode; // 0: cooling, 1: heating
+    private double dailyRent;
+    private int defaultTemperature = 26;
 
-    // getters and setters
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private List<Customer> customers;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getRoomNumber() {
-        return roomNumber;
-    }
-
-    public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-
-    public String getRoomType() {
-        return roomType;
-    }
-
-    public void setRoomType(String roomType) {
-        this.roomType = roomType;
-    }
-
-    public boolean isOccupied() {
-        return occupied;
-    }
-
-    public void setOccupied(boolean occupied) {
-        this.occupied = occupied;
-    }
+    // Getters and Setters
 }
