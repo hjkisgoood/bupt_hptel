@@ -27,7 +27,7 @@ public class RoomController {
     public List<Room> getAllRooms() {
         return roomService.getAllRooms();
     }
-
+//开关机,调温,工作模式,调风请求
     @PostMapping("/update")
     public String updateRoom(@RequestParam Long roomId,
                              @RequestParam(required = false) Integer temp,

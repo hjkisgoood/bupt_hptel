@@ -24,5 +24,4 @@ public class Customer {
     @JoinColumn(name = "room_id")
     private Room room;
 
-    // Getters and Setters
 }

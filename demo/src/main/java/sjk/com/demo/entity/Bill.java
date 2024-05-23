@@ -19,5 +19,4 @@ public class Bill {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    // Getters and Setters
 }
