@@ -1,20 +1,28 @@
 package sjk.com.demo.entity;
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import java.util.List;
 
 @Entity
+@Data
+@NoArgsConstructor
 public class Customer {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String identityNumber;
-    private String checkInDate;
+    private int accumulatedStayTime;
+    private double rent;
+    private double airConditionFee;
 
-    // getters and setters
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Bill> bills;
+
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private Room room;
+
+    // Getters and Setters
 }
